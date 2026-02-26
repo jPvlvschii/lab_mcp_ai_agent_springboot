@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/agent")
+@RequestMapping("/api")
 public class AgentController {
 
     private final AgentService agentService;
@@ -17,7 +17,10 @@ public class AgentController {
     }
 
     @PostMapping("/run")
-    public String run(@RequestBody String prompt) {
-        return agentService.run(prompt);
+    public String run(@RequestBody RunRequest request) {
+        return agentService.run(request.prompt());
+    }
+
+    public record RunRequest(String prompt) {
     }
 }
