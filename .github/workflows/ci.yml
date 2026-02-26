@@ -52,19 +52,12 @@ jobs:
         run: |
           kubectl wait --for=condition=Ready pod -l app=ai-agent --timeout=180s
           kubectl get pods
-          minikube service list
-          SERVICE_URL=$(minikube service ai-agent --url)
-          echo "${SERVICE_URL}/samples/test"
-          echo "------------------opening the service------------------"
-          sleep 40
 
       - name: Test service health endpoint
-        uses: nick-fields/retry@v3
-        with:
-          timeout_seconds: 10
-          max_attempts: 6
-          command: |
-            curl -fsS "$(minikube service ai-agent --url)/actuator/health"
+        run: |
+          kubectl port-forward svc/ai-agent 8080:8080 &
+          sleep 5
+          curl -fsS http://localhost:8080/actuator/health
 
       - name: Log Kubernetes pods
         run: |
