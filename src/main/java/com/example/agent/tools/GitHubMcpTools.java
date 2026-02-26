@@ -4,13 +4,11 @@ import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import com.example.agent.mcp.McpHttpClient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 @Component
-@Profile("!ci")
 public class GitHubMcpTools implements AgentTool {
 
     private final McpHttpClient mcp;
